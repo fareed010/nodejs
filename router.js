@@ -1,3 +1,8 @@
-console.log('I am executed immediately.');
+const express = require('express');
+const router = express.Router();
 
-module.exports = 'I am the export from the router file';
+router.get('/', (req, res) => {
+    res.render('home-guest');
+})
+
+module.exports = router;
