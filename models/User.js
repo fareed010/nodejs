@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const usersCollection = require('../db').collection('users');
 const validator = require('validator');
 
@@ -33,8 +34,8 @@ User.prototype.validate = function() {
         this.error.push('You must provide a password');
     }else if(this.data.password.length > 0 && this.data.password.length < 12){
         this.error.push('Password must be at least 12 characters')
-    }else if(this.data.password.length > 100){
-        this.error.push('Password can not exceed 100 charaters');
+    }else if(this.data.password.length > 50){
+        this.error.push('Password can not exceed 50 charaters');
     }else if(this.data.username.length > 0 && this.data.username.length < 3){
         this.error.push('Username must be at least 3 characters')
     }else if(this.data.username.length > 30){
@@ -46,7 +47,7 @@ User.prototype.login = function(){
    return new Promise((resolve, reject) => {
     this.cleanUp();
     usersCollection.findOne({username: this.data.username}).then((attemptedUser) => {
-        if(attemptedUser && attemptedUser.password == this.data.password){
+        if(attemptedUser && bcrypt.compareSync(this.data.password, attemptedUser.password)){
             resolve('Congrats...');
         }else{
             reject('Invalid username/password');
@@ -63,6 +64,9 @@ User.prototype.register = function() {
     this.validate()
     // step #2: only if there are no validation errors
     if(!this.error.length){
+        // hash user password
+        let salt = bcrypt.genSaltSync(10);
+        this.data.password = bcrypt.hashSync(this.data.password, salt);
         usersCollection.insertOne(this.data);
     }
     // then save the user data into a database
