@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 let User = function(data) {
     this.data = data;
     this.error = [];
@@ -6,8 +8,10 @@ let User = function(data) {
 User.prototype.validate = function() {
     if(this.data.username === ''){
         this.error.push('You must provide a username');
-    }else if(this.data.email === ''){
-        this.error.push('You must provide a email');
+    }else if(this.data.username !== '' && !validator.isAlphanumeric(this.data.username)){
+        this.error.push('Username can only contain letters and numbers');
+    }else if(!validator.isEmail(this.data.email)){
+        this.error.push('You must provide a validate email address');
     }else if(this.data.password === ''){
         this.error.push('You must provide a password');
     }else if(this.data.password.length > 0 && this.data.password.length < 12){
