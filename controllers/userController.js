@@ -7,7 +7,8 @@ exports.login = (req, res) => {
             res.redirect('/')
         })
     }).catch((err) => {
-        res.send(err);
+        req.flash('errors', err)
+        res.redirect('/');
     });
     
 }
