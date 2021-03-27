@@ -13,10 +13,9 @@ let sessionOptions = session({
 })
 
 app.use(sessionOptions)
-app.use(flash);
+app.use(flash());
 
 const router = require('./router');
-const { connect } = require('mongodb');
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
