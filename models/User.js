@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const usersCollection = require('../db').collection('users');
+const usersCollection = require('../db').db().collection('users');
 const validator = require('validator');
 
 let User = function(data) {
@@ -50,7 +50,7 @@ User.prototype.login = function(){
         if(attemptedUser && bcrypt.compareSync(this.data.password, attemptedUser.password)){
             resolve('Congrats...');
         }else{
-            reject('Invalid username/password');
+            reject('Invalid username / password');
         }
     }).catch(() => {
         reject('Please try again later.')
