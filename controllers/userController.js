@@ -14,7 +14,7 @@ exports.mustBeLoggedIn = function(req, res, next){
 exports.login = (req, res) => {
     let user = new User(req.body);
     user.login().then(() => {
-        req.session.user = {avatar: user.avator, username: user.data.username}
+        req.session.user = {avatar: user.avator, username: user.data.username, _id: user.data._id}
         req.session.save(() => {
             res.redirect('/')
         })
@@ -36,7 +36,7 @@ exports.logout = (req, res) => {
 exports.register = (req, res) => {
     let user = new User(req.body);
     user.register().then(() => {
-        req.session.user = {username: user.data.username, avatar: user.avator};
+        req.session.user = {username: user.data.username, avatar: user.avator, _id: user.data._id};
         req.session.save(() => {
             res.redirect('/')
         })
