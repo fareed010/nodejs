@@ -2,7 +2,7 @@ const User = require('../models/User');
 exports.login = (req, res) => {
     let user = new User(req.body);
     user.login().then(() => {
-        req.session.user = {favColor: 'blue', username: user.data.username}
+        req.session.user = {avatar: user.avator, username: user.data.username}
         req.session.save(() => {
             res.redirect('/')
         })
@@ -24,7 +24,7 @@ exports.logout = (req, res) => {
 exports.register = (req, res) => {
     let user = new User(req.body);
     user.register().then(() => {
-        req.session.user = {username: user.data.username};
+        req.session.user = {username: user.data.username, avatar: user.avator};
         req.session.save(() => {
             res.redirect('/')
         })
@@ -40,7 +40,7 @@ exports.register = (req, res) => {
 
 exports.home = (req, res) => {
     if(req.session.user){
-        res.render('home-dashboard', {username: req.session.user.username})
+        res.render('home-dashboard', {username: req.session.user.username, avatar: req.session.user.avatar})
     }else{
         res.render('home-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')});
     }
