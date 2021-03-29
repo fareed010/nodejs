@@ -117,6 +117,12 @@ User.findByUsername = function(username){
         }
         usersCollection.findOne({username: username}).then((userDoc) => {
             if(userDoc){
+                userDoc = new User(userDoc, true);
+                userDoc = {
+                    _id: userDoc.data._id,
+                    username: userDoc.data.username,
+                    avator: userDoc.avator
+                }
                 resolve(userDoc);
             }else{
                 reject();
