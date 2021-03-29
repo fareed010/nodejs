@@ -110,12 +110,12 @@ User.prototype.getAvator = function(){
 }
 
 User.findByUsername = function(username){
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject){
         if(typeof(username !== "string")){
             reject();
             return;
         }
-        usersCollection.findOne({username: username}).then((userDoc) => {
+        usersCollection.findOne({username: username}).then(function(userDoc){
             if(userDoc){
                 userDoc = new User(userDoc, true);
                 userDoc = {
@@ -127,7 +127,7 @@ User.findByUsername = function(username){
             }else{
                 reject();
             }
-        }).catch(() => {
+        }).catch(function(){
             reject();
         })
     })
