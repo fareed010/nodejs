@@ -3,9 +3,15 @@ const usersCollection = require('../db').db().collection('users');
 const validator = require('validator');
 const md5 = require('md5');
 
-let User = function(data) {
+let User = function(data, getAvator) {
     this.data = data;
     this.error = [];
+    if(getAvator == undefined){
+        getAvator = false;
+    }
+    if(getAvator){
+        this.getAvator(); 
+    }
 }
 
 User.prototype.cleanUp = function(){
