@@ -23,7 +23,24 @@ export default class RegistrationForm {
     }
 
     usernameHandler(){
-        alert("Username handle just run")
+        this.usernameImmediately()
+        clearTimeout(this.username.timer)
+        this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000)
+    }
+
+    usernameImmediately(){
+        if(this.username.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.username.value)){
+            this.showValidationError(this.username, 'Username can only contain letters and numbers.')
+        }
+    }
+    
+    showValidationError(el, message){
+        el.nextElementSibling.innerHTML = message
+        el.nextElementSibling.classList.add("liveValidationMessage--visible")
+    }
+
+    usernameAfterDelay(){
+        alert('After delay method just run')
     }
 
     insertValidationElements(){
