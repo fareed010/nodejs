@@ -63,11 +63,12 @@ export default class RegistrationForm {
         axios.post('/doesUsernameExist', {username: this.username.value}).then((response) => {
           if(response.data){
             this.showValidationError(this.username, 'That username is already taken.')
+            this.username.isUnique = false
           }else{
-
+            this.username.isUnique = true
           }
         }).catch(()=> {
-
+          console.log('Please try again later.')
         })
       }
     }
