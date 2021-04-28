@@ -2,7 +2,7 @@ const mongodb = require('mongodb');
 require('dotenv').config();
 
 const URI_STRING = process.env.CONNECTION_URI;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 mongodb.connect(URI_STRING, {useNewUrlParser: true, useUnifiedTopology: true}, (err, client) => {
     if(err) throw err;
